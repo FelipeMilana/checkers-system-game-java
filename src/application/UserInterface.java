@@ -33,29 +33,43 @@ public class UserInterface {
 	
 	//impressao do tabuleiro
 	public static void printBoard(CheckersPiece[][] checkersPiece) {   
+		int count = 0;
+		
 		for(int i = 0; i < checkersPiece.length; i++) {
 			System.out.print(ANSI_RED + (8 - i) + " " + ANSI_RESET);
 			for(int j = 0; j < checkersPiece[i].length; j++) {
+				if((count % 2 == 0 || count == 0) && (j == 0 || j % 2 == 0)) {
+					System.out.print(ANSI_WHITE_BACKGROUND);
+				}
+				else if(count % 2 != 0 && j % 2 != 0) {
+					System.out.print(ANSI_WHITE_BACKGROUND);
+				}
+				else {
+					System.out.print(ANSI_GREEN_BACKGROUND);
+				}
 				printPiece(checkersPiece[i][j]);
 			}
+			
 			System.out.println();
+			count++;
 		}
-		System.out.println(ANSI_RED + "  a b c d e f g h" + ANSI_RESET);
+		
+		System.out.println(ANSI_RED + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
 	}
 	
 	//impressao de uma peça
 	private static void printPiece(CheckersPiece checkersPiece) {
+		
 		if(checkersPiece == null) {
-			System.out.print(ANSI_PURPLE + "-" + ANSI_RESET);
+			System.out.print(ANSI_BLACK+ "   "+ ANSI_RESET );
 		}
 		
 		else if(checkersPiece.getColor() == Color.WHITE) {
-			System.out.print(ANSI_WHITE + checkersPiece.toString() + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
+			System.out.print(ANSI_YELLOW + " "+checkersPiece.toString() +" " + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
 		}
 		
 		else {
-			System.out.print(ANSI_YELLOW + checkersPiece.toString() + ANSI_RESET); //imprimo o que tiver no toString da peça amarela
+			System.out.print(ANSI_RED + " "+checkersPiece.toString() +" " + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
 		}
-		System.out.print(" ");
 	}
 }

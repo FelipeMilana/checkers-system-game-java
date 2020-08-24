@@ -1,6 +1,6 @@
 package boardgame;
 
-public abstract class Piece {  //peça no tabuleiro
+public class Piece {  //peça no tabuleiro
 
 	//association
 	protected Position position;  //é apenas uma posição de matriz(inicialmente nula) e tera acesso a esse atributo, as subclasses dessa classe
@@ -16,7 +16,7 @@ public abstract class Piece {  //peça no tabuleiro
 		return board;
 	}
 	
-	public abstract boolean[][] possibleMoves();   //metodo que retorna a matriz de movimentos de cada peça
+	/*public abstract boolean[][] possibleMoves();   //metodo que retorna a matriz de movimentos de cada peça
 	
 	public boolean possibleMove(Position position) {   //informa uma posição e verifica se naquela posição tem true or false na matriz de movimentos da peça
 		return possibleMoves()[position.getRow()][position.getColumn()];
@@ -32,5 +32,5 @@ public abstract class Piece {  //peça no tabuleiro
 			}
 		}
 		return false;   //senao, retorna que nao tem movimento possivel
-	}
+	} */
 }

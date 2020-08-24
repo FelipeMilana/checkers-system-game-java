@@ -3,7 +3,7 @@ package checkers;
 import boardgame.Board;
 import boardgame.Piece;
 
-public abstract class CheckersPiece extends Piece {   //tambem é abstrata
+public class CheckersPiece extends Piece {   //tambem é abstrata
 	
 	//association
 	private Color color;
