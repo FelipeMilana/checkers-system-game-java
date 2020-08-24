@@ -1,7 +1,6 @@
 package checkers;
 
 import boardgame.Board;
-import boardgame.Position;
 import checkers.pieces.Rock;
 
 public class CheckersMatch {
@@ -26,31 +25,35 @@ public class CheckersMatch {
 		return mat;
 	}
 	
+	private void placeNewPiece(char column, int row, CheckersPiece checkersPiece) {
+		board.placePiece(checkersPiece, new CheckersPosition(column, row).toPosition());
+	}
+	
 	private void initialSetup() {
-		board.placePiece(new Rock(board, Color.WHITE), new Position(0, 1));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(0, 3));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(0, 5));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(0, 7));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(1, 0));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(1, 2));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(1, 4));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(1, 6));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(2, 1));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(2, 3));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(2, 5));
-		board.placePiece(new Rock(board, Color.WHITE), new Position(2, 7));
+		placeNewPiece('b', 8, new Rock(board, Color.WHITE));
+		placeNewPiece('d', 8, new Rock(board, Color.WHITE));
+		placeNewPiece('f', 8, new Rock(board, Color.WHITE));
+		placeNewPiece('h', 8, new Rock(board, Color.WHITE));
+		placeNewPiece('a', 7, new Rock(board, Color.WHITE));
+		placeNewPiece('c', 7, new Rock(board, Color.WHITE));
+		placeNewPiece('e', 7, new Rock(board, Color.WHITE));
+		placeNewPiece('g', 7, new Rock(board, Color.WHITE));
+		placeNewPiece('b', 6, new Rock(board, Color.WHITE));
+		placeNewPiece('d', 6, new Rock(board, Color.WHITE));
+		placeNewPiece('g', 6, new Rock(board, Color.WHITE));
+		placeNewPiece('h', 6, new Rock(board, Color.WHITE));
 		
-		board.placePiece(new Rock(board, Color.BLACK), new Position(5, 0));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(5, 2));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(5, 4));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(5, 6));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(6, 1));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(6, 3));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(6, 5));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(6, 7));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(7, 0));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(7, 2));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(7, 4));
-		board.placePiece(new Rock(board, Color.BLACK), new Position(7, 6));
+		placeNewPiece('a', 3, new Rock(board, Color.BLACK));
+		placeNewPiece('c', 3, new Rock(board, Color.BLACK));
+		placeNewPiece('e', 3, new Rock(board, Color.BLACK));
+		placeNewPiece('g', 3, new Rock(board, Color.BLACK));
+		placeNewPiece('b', 2, new Rock(board, Color.BLACK));
+		placeNewPiece('d', 2, new Rock(board, Color.BLACK));
+		placeNewPiece('f', 2, new Rock(board, Color.BLACK));
+		placeNewPiece('h', 2, new Rock(board, Color.BLACK));
+		placeNewPiece('a', 1, new Rock(board, Color.BLACK));
+		placeNewPiece('c', 1, new Rock(board, Color.BLACK));
+		placeNewPiece('e', 1, new Rock(board, Color.BLACK));
+		placeNewPiece('g', 1, new Rock(board, Color.BLACK));
 	}
 }

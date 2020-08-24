@@ -69,7 +69,7 @@ public class UserInterface {
 		}
 		
 		else {
-			System.out.print(ANSI_RED + " "+checkersPiece.toString() +" " + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
+			System.out.print(ANSI_BLACK + " "+checkersPiece.toString() +" " + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
 		}
 	}
 }
