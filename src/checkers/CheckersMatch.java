@@ -31,7 +31,7 @@ public class CheckersMatch {
 		Position source = sourcePosition.toPosition();  //converte de posição de damas para posição de matriz
 		Position target = targetPosition.toPosition();
 		validateSourcePosition(source);
-		Piece capturedPiece = makeMove(source, target);
+		Piece capturedPiece = makeMove(source, target);  
 		return (CheckersPiece)capturedPiece;
 	}
 	
@@ -41,7 +41,7 @@ public class CheckersMatch {
 		}
 	}
 	
-	private Piece makeMove(Position source, Position target) {
+	private Piece makeMove(Position source, Position target) {  //vai ter q alterar no futuro
 		Piece p = board.removePiece(source); //retira a peça na posição de origem
 		Piece capturedPiece = board.removePiece(target);  //retira a peça na posição de destino
 		board.placePiece(p, target); //coloco a peça p na posição de destino
