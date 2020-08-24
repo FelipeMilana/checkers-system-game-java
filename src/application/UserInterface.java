@@ -1,6 +1,10 @@
 package application;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import checkers.CheckersPiece;
+import checkers.CheckersPosition;
 import checkers.Color;
 
 public class UserInterface {
@@ -31,27 +35,39 @@ public class UserInterface {
 		System.out.flush();
 	}	
 	
+	//ler os dados do usuario
+	public static CheckersPosition readCheckersPosition(Scanner sc) {
+		try {
+			String s = sc.nextLine();  //ex: a2
+			char column = s.charAt(0); //recebe a primeira letra da string, ex: a
+			int row = Integer.parseInt(s.substring(1));  //transforma de string para int
+			return new CheckersPosition(column, row);   //instanscia uma posição de damas
+		}
+		catch(RuntimeException e) {
+			throw new InputMismatchException("Error reading Checkersposition. Valid values are from a1 to h8.");
+		}
+	}
+	
 	//impressao do tabuleiro
 	public static void printBoard(CheckersPiece[][] checkersPiece) {   
-		int count = 0;
-		
 		for(int i = 0; i < checkersPiece.length; i++) {
 			System.out.print(ANSI_RED + (8 - i) + " " + ANSI_RESET);
 			for(int j = 0; j < checkersPiece[i].length; j++) {
-				if((count % 2 == 0 || count == 0) && (j == 0 || j % 2 == 0)) {
+				
+				if((i % 2 == 0 || i == 0) && (j == 0 || j % 2 == 0)) {   //montar o tabuleiro com as casas verdes e brancas
 					System.out.print(ANSI_WHITE_BACKGROUND);
 				}
-				else if(count % 2 != 0 && j % 2 != 0) {
+				else if(i % 2 != 0 && j % 2 != 0) {
 					System.out.print(ANSI_WHITE_BACKGROUND);
 				}
 				else {
 					System.out.print(ANSI_GREEN_BACKGROUND);
 				}
+				
 				printPiece(checkersPiece[i][j]);
 			}
 			
 			System.out.println();
-			count++;
 		}
 		
 		System.out.println(ANSI_RED + "   a  b  c  d  e  f  g  h" + ANSI_RESET);

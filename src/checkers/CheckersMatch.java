@@ -1,6 +1,8 @@
 package checkers;
 
 import boardgame.Board;
+import boardgame.Piece;
+import boardgame.Position;
 import checkers.pieces.Rock;
 
 public class CheckersMatch {
@@ -25,6 +27,27 @@ public class CheckersMatch {
 		return mat;
 	}
 	
+	public CheckersPiece checkersMove(CheckersPosition sourcePosition, CheckersPosition targetPosition) {
+		Position source = sourcePosition.toPosition();  //converte de posição de damas para posição de matriz
+		Position target = targetPosition.toPosition();
+		validateSourcePosition(source);
+		Piece capturedPiece = makeMove(source, target);
+		return (CheckersPiece)capturedPiece;
+	}
+	
+	private void validateSourcePosition(Position position) {
+		if(!board.thereIsAPiece(position)) {   //se nao tiver peça nessa posição e ja testa se a posição existe
+			throw new CheckersException("There is no piece on source position!");  //checkersException é uma boardException 
+		}
+	}
+	
+	private Piece makeMove(Position source, Position target) {
+		Piece p = board.removePiece(source); //retira a peça na posição de origem
+		Piece capturedPiece = board.removePiece(target);  //retira a peça na posição de destino
+		board.placePiece(p, target); //coloco a peça p na posição de destino
+		return capturedPiece;
+	}
+	
 	private void placeNewPiece(char column, int row, CheckersPiece checkersPiece) {
 		board.placePiece(checkersPiece, new CheckersPosition(column, row).toPosition());
 	}
@@ -40,7 +63,7 @@ public class CheckersMatch {
 		placeNewPiece('g', 7, new Rock(board, Color.WHITE));
 		placeNewPiece('b', 6, new Rock(board, Color.WHITE));
 		placeNewPiece('d', 6, new Rock(board, Color.WHITE));
-		placeNewPiece('g', 6, new Rock(board, Color.WHITE));
+		placeNewPiece('f', 6, new Rock(board, Color.WHITE));
 		placeNewPiece('h', 6, new Rock(board, Color.WHITE));
 		
 		placeNewPiece('a', 3, new Rock(board, Color.BLACK));
