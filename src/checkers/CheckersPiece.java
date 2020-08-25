@@ -1,9 +1,11 @@
 package checkers;
 
 import boardgame.Board;
-import boardgame.Piece;
 
-public class CheckersPiece extends Piece {   //tambem é abstrata
+import boardgame.Piece;
+import boardgame.Position;
+
+public abstract class CheckersPiece extends Piece {   //tambem é abstrata
 	
 	//association
 	private Color color;
@@ -17,5 +19,10 @@ public class CheckersPiece extends Piece {   //tambem é abstrata
 	//methods
 	public Color getColor() {
 		return color;
+	}
+	
+	protected boolean isThereOpponentPiece(Position position) {
+		CheckersPiece p = (CheckersPiece)getBoard().piece(position);
+		return p != null && p.getColor() != color;      //se houver uma peça e tiver cor diferente da peça 
 	}
 }

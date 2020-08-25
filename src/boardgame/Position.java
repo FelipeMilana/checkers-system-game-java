@@ -29,7 +29,7 @@ public class Position {  //posição no tabuleiro
 		this.column = column;
 	}
 	
-	public void SetValues(int row, int column) {
+	public void setValues(int row, int column) {
 		this.row = row;
 		this.column = column;
 	}
