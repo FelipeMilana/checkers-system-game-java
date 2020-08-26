@@ -27,6 +27,12 @@ public class CheckersMatch {
 		return mat;
 	}
 	
+	public boolean[][] possibleMoves(CheckersPosition sourcePosition) {
+		Position position = sourcePosition.toPosition();
+		validateSourcePosition(position);
+		return board.piece(position).possibleMoves();   //retorna os movimentos possiveis de uma peça
+	}
+	
 	public CheckersPiece checkersMove(CheckersPosition sourcePosition, CheckersPosition targetPosition) {
 		Position source = sourcePosition.toPosition();  //converte de posição de damas para posição de matriz
 		Position target = targetPosition.toPosition();

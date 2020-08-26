@@ -82,16 +82,16 @@ public class Rock extends CheckersPiece{
 		else {
 			
 			//sudeste
-			p.setValues(position.getRow() + 1, position.getColumn() + 1);  //4,3
+			p.setValues(position.getRow() + 1, position.getColumn() + 1);  
 			
 			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {  //andar
 				mat[p.getRow()][p.getColumn()] = true;
 			}
 			
-			if(getBoard().positionExists(p) && !isThereOpponentPiece(p)) {    //4,3
+			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {    
 				p.setValues(p.getRow() + 1, p.getColumn() + 1);        
 				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {  //5,4
+				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {  
 					mat[p.getRow()][p.getColumn()] = true;
 				}
 			}

@@ -64,7 +64,7 @@ public class UserInterface {
 					System.out.print(ANSI_GREEN_BACKGROUND);
 				}
 				
-				printPiece(checkersPiece[i][j]);
+				printPiece(checkersPiece[i][j], false);
 			}
 			
 			System.out.println();
@@ -73,11 +73,39 @@ public class UserInterface {
 		System.out.println(ANSI_RED + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
 	}
 	
+	//impressao do tabuleiro com os movimentos possiveis
+		public static void printBoard(CheckersPiece[][] checkersPiece, boolean[][] possibleMoves) {    //sobrecarga do metodo
+			for(int i = 0; i < checkersPiece.length; i++) {
+				System.out.print(ANSI_RED + (8 - i) + " " + ANSI_RESET);
+				for(int j = 0; j < checkersPiece[i].length; j++) {
+					
+					if((i % 2 == 0 || i == 0) && (j == 0 || j % 2 == 0)) {   //montar o tabuleiro com as casas verdes e brancas
+						System.out.print(ANSI_WHITE_BACKGROUND);
+					}
+					else if(i % 2 != 0 && j % 2 != 0) {
+						System.out.print(ANSI_WHITE_BACKGROUND);
+					}
+					else {
+						System.out.print(ANSI_GREEN_BACKGROUND);
+					}
+					
+					printPiece(checkersPiece[i][j], possibleMoves[i][j]);    //se na posição do possibleMoves tiver true, ele pinta o movimento
+				}
+				
+				System.out.println();
+			}
+			
+			System.out.println(ANSI_RED + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
+		}
+	
 	//impressao de uma peça
-	private static void printPiece(CheckersPiece checkersPiece) {
+	private static void printPiece(CheckersPiece checkersPiece, boolean background) {
+		if(background) {
+			System.out.print(ANSI_BLUE_BACKGROUND);
+		}
 		
 		if(checkersPiece == null) {
-			System.out.print(ANSI_BLACK+ "   "+ ANSI_RESET );
+			System.out.print("   "+ ANSI_RESET );
 		}
 		
 		else if(checkersPiece.getColor() == Color.WHITE) {

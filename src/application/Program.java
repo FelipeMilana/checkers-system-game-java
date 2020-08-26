@@ -3,6 +3,8 @@ package application;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.jws.soap.SOAPBinding.Use;
+
 import checkers.CheckersException;
 import checkers.CheckersMatch;
 import checkers.CheckersPiece;
@@ -23,6 +25,10 @@ public class Program {
 				System.out.println();
 				System.out.print("Source: ");
 				CheckersPosition source = UserInterface.readCheckersPosition(sc);
+				
+				boolean[][] possibleMoves = checkersMatch.possibleMoves(source); 
+				UserInterface.clearScreen();  
+				UserInterface.printBoard(checkersMatch.getPieces(), possibleMoves);
 				
 				System.out.println();
 				System.out.print("Target: ");
