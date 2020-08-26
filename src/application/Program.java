@@ -21,7 +21,7 @@ public class Program {
 			try {
 				System.out.println();
 				UserInterface.clearScreen();
-				UserInterface.printBoard(checkersMatch.getPieces());
+				UserInterface.printMatch(checkersMatch);
 				System.out.println();
 				System.out.print("Source: ");
 				CheckersPosition source = UserInterface.readCheckersPosition(sc);
@@ -35,6 +35,23 @@ public class Program {
 				CheckersPosition target = UserInterface.readCheckersPosition(sc);
 				
 				CheckersPiece capturedPiece = checkersMatch.checkersMove(source, target);
+				
+				/*while(capturedPiece != null) {
+					CheckersPosition newSource = target;
+					System.out.println(newSource.toString());
+					possibleMoves = checkersMatch.possibleMoves(newSource); 
+					UserInterface.clearScreen();  
+					UserInterface.printBoard(checkersMatch.getPieces(), possibleMoves);
+					
+					System.out.println();
+					System.out.print("Target: ");
+					CheckersPosition newTarget = UserInterface.readCheckersPosition(sc);
+					
+					capturedPiece = checkersMatch.checkersMove(newSource, newTarget);
+					newTarget = target;
+				} */
+				
+				
 			}
 			
 			catch(CheckersException e) {

@@ -7,16 +7,30 @@ import checkers.pieces.Rock;
 
 public class CheckersMatch {
 
+	//attributes
+	private int turn;
+	
 	//associations
 	private Board board;
+	private Color currentPlayer;
 	
 	//constructors
 	public CheckersMatch() {
 		board = new Board(8, 8);    //instanciamos um tabuleiro nulo 8x8
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		initialSetup();   //inicializamos as peças
 	}
 	
-	//methods	
+	//methods
+	public int getTurn() {
+		return turn;
+	}
+	
+	public Color getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
 	public CheckersPiece[][] getPieces() {
 		CheckersPiece[][] mat = new CheckersPiece[board.getRows()][board.getColumns()];  //cria uma matriz nula do mesmo tamanho do tabuleiro
 		for(int i = 0; i < mat.length; i++) {
@@ -39,13 +53,22 @@ public class CheckersMatch {
 		validateSourcePosition(source);
 		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);  
+		nextTurn();
 		return (CheckersPiece)capturedPiece;
+	}
+	
+	private void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
 	}
 	
 	private void validateSourcePosition(Position position) {
 		if(!board.thereIsAPiece(position)) {   //se nao tiver peça nessa posição e ja testa se a posição existe
 			throw new CheckersException("There is no piece on source position!");  //checkersException é uma boardException 
-		}	
+		}
+		if(currentPlayer != ((CheckersPiece)board.piece(position)).getColor()) {
+			throw new CheckersException("The chosen piece is not yours!");
+		}
 		if(!board.piece(position).isThereAnyPossibleMove()) {
 			throw new CheckersException("There is no possible moves for the chosen piece!");
 		}
@@ -60,29 +83,30 @@ public class CheckersMatch {
 	private Piece makeMove(Position source, Position target) {  //vai ter q alterar no futuro
 		Piece p = board.removePiece(source); //retira a peça na posição de origem
 		Piece targetPiece = board.removePiece(target);  //retira o nulo do tabuleiro
+		Piece capturedPiece = targetPiece;
 		
 		if((target.getRow() <= source.getRow() - 2) || (target.getRow() >= source.getRow() + 2)) {  //se comer peça
 			
 			if(target.getRow() > source.getRow() && target.getColumn() > source.getColumn()) {   //sudeste
 				Position capture = new Position(source.getRow() + 1, source.getColumn() + 1);
-				Piece capturedPiece = board.removePiece(capture);
+				capturedPiece = board.removePiece(capture);
 			}
 			else if(target.getRow() > source.getRow() && target.getColumn() < source.getColumn()) {  //sudoeste
 				Position capture = new Position(source.getRow() + 1, source.getColumn() - 1);
-				Piece capturedPiece = board.removePiece(capture);
+				capturedPiece = board.removePiece(capture);
 			}
 			else if(target.getRow() < source.getRow() && target.getColumn() > source.getColumn()) {   //nordeste
 				Position capture = new Position(source.getRow() - 1, source.getColumn() + 1);
-				Piece capturedPiece = board.removePiece(capture);
+				capturedPiece = board.removePiece(capture);
 			}
 			else {  //noroeste
 				Position capture = new Position(source.getRow() - 1, source.getColumn() - 1);
-				Piece capturedPiece = board.removePiece(capture);
+				capturedPiece = board.removePiece(capture);
 			}
 		}
 		
 		board.placePiece(p, target); //coloco a peça p na posição de destino
-		return targetPiece;
+		return capturedPiece;
 	}
 	
 	private void placeNewPiece(char column, int row, CheckersPiece checkersPiece) {
