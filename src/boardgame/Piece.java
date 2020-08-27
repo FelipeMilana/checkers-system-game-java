@@ -1,5 +1,6 @@
 package boardgame;
 
+
 public abstract class Piece {  //peça no tabuleiro
 
 	//association
@@ -16,21 +17,29 @@ public abstract class Piece {  //peça no tabuleiro
 		return board;
 	}
 	
-	public abstract boolean[][] possibleMoves();   //metodo que retorna a matriz de movimentos de cada peça
+	public abstract boolean[][] possibleCatchMoves();   //metodo que retorna a matriz de movimentos de cada peça
 	
-	public boolean possibleMove(Position position) {   //informa uma posição e verifica se naquela posição tem true or false na matriz de movimentos da peça
-		return possibleMoves()[position.getRow()][position.getColumn()];
+	public abstract boolean[][] possibleSimpleMoves();
+	
+	public boolean possibleCatchMove(Position position) {
+		return possibleCatchMoves()[position.getRow()][position.getColumn()];
 	}
 	
-	public boolean isThereAnyPossibleMove() {  //verifica se tem pelo menos 1 movimento possivel
-		boolean[][] mat = possibleMoves();    //armazena na matriz mat os movimentos possiveis da peça
-		for(int i = 0; i < mat.length; i++) {
-			for(int j = 0; j < mat[i].length; j++) {   //percorre a matriz
-				if(mat[i][j]) {   //se tiver true
+	public boolean possibleSimpleMove(Position position) {
+		return possibleSimpleMoves()[position.getRow()][position.getColumn()];
+	}
+	
+	public boolean isThereAnyPossibleMoves() {
+		boolean[][] matCatch = possibleCatchMoves();
+		boolean[][] matSimple = possibleSimpleMoves();
+		
+		for(int i = 0; i < matCatch.length; i++) {
+			for(int j = 0; j < matCatch[i].length; j++) {   //percorre a matriz
+				if(matCatch[i][j] || matSimple[i][j]) {   //se tiver true
 					return true;    //retorna que tem movimento possivel
 				}
 			}
 		}
-		return false;   //senao, retorna que nao tem movimento possivel
-	} 
+		return false;   //senao, retorna que nao tem movimento possivel	
+	}
 }

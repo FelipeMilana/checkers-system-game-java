@@ -19,8 +19,8 @@ public class Rock extends CheckersPiece{
 	}
 	
 	@Override
-	public boolean[][] possibleMoves() {
-		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];  //inicialmente com false
+	public boolean[][] possibleCatchMoves() {
+		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
 		
 		Position p = new Position(0, 0); //posição auxiliar
 		
@@ -29,10 +29,6 @@ public class Rock extends CheckersPiece{
 			//nordeste
 			p.setValues(position.getRow() - 1, position.getColumn() + 1);  
 			
-			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {     //andar
-				mat[p.getRow()][p.getColumn()] = true;
-			}
-			
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      //comer 
 				p.setValues(p.getRow() - 1, p.getColumn() + 1);        
 				
@@ -40,13 +36,9 @@ public class Rock extends CheckersPiece{
 					mat[p.getRow()][p.getColumn()] = true;
 				}
 			}
-			
+		
 			//noroeste
 			p.setValues(position.getRow() - 1, position.getColumn() - 1);  
-			
-			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {     //andar
-				mat[p.getRow()][p.getColumn()] = true;
-			}
 			
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      //comer 
 				p.setValues(p.getRow() - 1, p.getColumn() - 1);        
@@ -78,15 +70,10 @@ public class Rock extends CheckersPiece{
 				}
 			}
 		}
-		
 		else {
 			
 			//sudeste
 			p.setValues(position.getRow() + 1, position.getColumn() + 1);  
-			
-			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {  //andar
-				mat[p.getRow()][p.getColumn()] = true;
-			}
 			
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {    
 				p.setValues(p.getRow() + 1, p.getColumn() + 1);        
@@ -99,10 +86,6 @@ public class Rock extends CheckersPiece{
 			//sudoeste
 			p.setValues(position.getRow() + 1, position.getColumn() - 1);  
 			
-			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {  //andar
-				mat[p.getRow()][p.getColumn()] = true;
-			}
-			
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      //comer 
 				p.setValues(p.getRow() + 1, p.getColumn() - 1);        
 				
@@ -111,7 +94,7 @@ public class Rock extends CheckersPiece{
 				}
 			}
 			
-			//nordeste (comer pra tras)
+			//nordeste 
 			p.setValues(position.getRow() - 1, position.getColumn() + 1);  
 			
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      //comer para tras
@@ -131,6 +114,46 @@ public class Rock extends CheckersPiece{
 				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
 					mat[p.getRow()][p.getColumn()] = true;
 				}
+			}
+		}	
+		return mat;
+	}
+	
+	@Override
+	public boolean[][] possibleSimpleMoves() {
+		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];  //inicialmente com false
+		
+		
+		Position p = new Position(0, 0); //posição auxiliar
+		
+		if(getColor() == Color.WHITE) {
+			//nordeste
+			p.setValues(position.getRow() - 1, position.getColumn() + 1);  
+			
+			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {     //andar
+				mat[p.getRow()][p.getColumn()] = true;
+			}
+			
+			//nororeste
+			p.setValues(position.getRow() - 1, position.getColumn() - 1); 
+			
+			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {     //andar
+				mat[p.getRow()][p.getColumn()] = true;
+			}
+		}
+		else {
+			//sudeste
+			p.setValues(position.getRow() + 1, position.getColumn() + 1);  
+			
+			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {     //andar
+				mat[p.getRow()][p.getColumn()] = true;
+			}
+
+			//sudoeste
+			p.setValues(position.getRow() + 1, position.getColumn() - 1);  
+			
+			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {     //andar
+				mat[p.getRow()][p.getColumn()] = true;
 			}
 		}
 		return mat;

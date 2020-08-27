@@ -1,5 +1,9 @@
 package checkers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
@@ -13,6 +17,8 @@ public class CheckersMatch {
 	//associations
 	private Board board;
 	private Color currentPlayer;
+	private List<Piece> piecesOnTheBoard = new ArrayList<Piece>();
+	private List<Piece> capturedPieces = new ArrayList<Piece>();
 	
 	//constructors
 	public CheckersMatch() {
@@ -41,10 +47,15 @@ public class CheckersMatch {
 		return mat;
 	}
 	
-	public boolean[][] possibleMoves(CheckersPosition sourcePosition) {
+	public boolean[][] possibleMoves(CheckersPosition sourcePosition) { //para aparecer em azul
 		Position position = sourcePosition.toPosition();
 		validateSourcePosition(position);
-		return board.piece(position).possibleMoves();   //retorna os movimentos possiveis de uma peça
+		if(CanCatch(board.piece(position))) {   //se tiver peça possivel para captura, a matriz de movimentos possiveis vai ser a de captura
+			return board.piece(position).possibleCatchMoves();
+		}
+		else {
+			return board.piece(position).possibleSimpleMoves();  //se nao tiver captura, a matriz de movimentos possiveis é a de um movimento simples
+		}
 	}
 	
 	public CheckersPiece checkersMove(CheckersPosition sourcePosition, CheckersPosition targetPosition) {
@@ -69,13 +80,17 @@ public class CheckersMatch {
 		if(currentPlayer != ((CheckersPiece)board.piece(position)).getColor()) {
 			throw new CheckersException("The chosen piece is not yours!");
 		}
-		if(!board.piece(position).isThereAnyPossibleMove()) {
+		if(!board.piece(position).isThereAnyPossibleMoves()) {
 			throw new CheckersException("There is no possible moves for the chosen piece!");
+		}
+		
+		if(isThereAnyPieceCanCatch() && !CanCatch(board.piece(position))) {  //tem peça q pode comer e nao é a q pode comer
+			throw new CheckersException("You must catch the opponent pieces!");
 		}
 	}
 	
 	private void validateTargetPosition(Position source, Position target) {
-		if(!board.piece(source).possibleMove(target)) {
+		if(!board.piece(source).possibleCatchMove(target) && !board.piece(source).possibleSimpleMove(target)) { //se nao pode capturar nem mover apenas
 			throw new CheckersException("The chosen piece can't move to target position!");
 		}
 	}
@@ -105,12 +120,48 @@ public class CheckersMatch {
 			}
 		}
 		
+		if(capturedPiece != null) {
+			piecesOnTheBoard.remove(capturedPiece);
+			capturedPieces.add(capturedPiece);
+		}
+		
 		board.placePiece(p, target); //coloco a peça p na posição de destino
 		return capturedPiece;
 	}
 	
+	private boolean CanCatch(Piece piece) {     //recebe uma peça e verifica se essa peça possui alguma posição de movimento de comer
+		
+		boolean[][] matCatch = piece.possibleCatchMoves();
+				
+		for(int i = 0; i < matCatch.length; i++) {
+			for(int j = 0; j < matCatch[i].length; j++) {
+				if(matCatch[i][j]) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean isThereAnyPieceCanCatch() {
+		List<Piece> myPieces = piecesOnTheBoard.stream().filter(x -> ((CheckersPiece)x).getColor() == currentPlayer).collect(Collectors.toList());
+		for(Piece p: myPieces) {
+			boolean[][] mat = p.possibleCatchMoves();
+			for(int i = 0; i < mat.length; i++) {
+				for(int j = 0; j < mat[i].length; j++) {
+					if(mat[i][j]) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	
 	private void placeNewPiece(char column, int row, CheckersPiece checkersPiece) {
 		board.placePiece(checkersPiece, new CheckersPosition(column, row).toPosition());
+		piecesOnTheBoard.add(checkersPiece);
 	}
 	
 	private void initialSetup() {

@@ -1,7 +1,9 @@
 package application;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import checkers.CheckersMatch;
 import checkers.CheckersPiece;
@@ -50,18 +52,25 @@ public class UserInterface {
 	}
 	
 	//impressao da partida
-	public static void printMatch(CheckersMatch checkersMatch) {
+	public static void printMatch(CheckersMatch checkersMatch, List<CheckersPiece> captured) {
 		printBoard(checkersMatch.getPieces());
 		System.out.println();
+		printCapturedPieces(captured);
 		System.out.println("Turn: " + checkersMatch.getTurn());
-		System.out.println("Waiting player: " + checkersMatch.getCurrentPlayer());
+		
+		if(checkersMatch.getCurrentPlayer() == Color.WHITE) {
+			System.out.println("Waiting player: " + ANSI_YELLOW + "WHITE" + ANSI_RESET);
+		}
+		else {
+			System.out.println("Waiting player: BLACK");
+		}
+		
 	}
-	
 	
 	//impressao do tabuleiro
 	public static void printBoard(CheckersPiece[][] checkersPiece) {   
 		for(int i = 0; i < checkersPiece.length; i++) {
-			System.out.print(ANSI_RED + (8 - i) + " " + ANSI_RESET);
+			System.out.print(ANSI_WHITE + (8 - i) + " " + ANSI_RESET);
 			for(int j = 0; j < checkersPiece[i].length; j++) {
 				
 				if((i % 2 == 0 || i == 0) && (j == 0 || j % 2 == 0)) {   //montar o tabuleiro com as casas verdes e brancas
@@ -76,11 +85,9 @@ public class UserInterface {
 				
 				printPiece(checkersPiece[i][j], false);
 			}
-			
 			System.out.println();
 		}
-		
-		System.out.println(ANSI_RED + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
+		System.out.println(ANSI_WHITE + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
 	}
 	
 	//impressao do tabuleiro com os movimentos possiveis
@@ -101,10 +108,8 @@ public class UserInterface {
 					
 					printPiece(checkersPiece[i][j], possibleMoves[i][j]);    //se na posição do possibleMoves tiver true, ele pinta o movimento
 				}
-				
 				System.out.println();
 			}
-			
 			System.out.println(ANSI_RED + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
 		}
 	
@@ -117,13 +122,25 @@ public class UserInterface {
 		if(checkersPiece == null) {
 			System.out.print("   "+ ANSI_RESET );
 		}
-		
 		else if(checkersPiece.getColor() == Color.WHITE) {
 			System.out.print(ANSI_YELLOW + " "+checkersPiece.toString() +" " + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
 		}
-		
 		else {
 			System.out.print(ANSI_BLACK + " "+checkersPiece.toString() +" " + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
 		}
+	}
+	
+	//imprime a lista de peças capturadas
+	private static void printCapturedPieces(List<CheckersPiece> captured) {
+		List<CheckersPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
+		List<CheckersPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
+		System.out.println(ANSI_RED + "Captured pieces: " + ANSI_RESET);
+		System.out.println(ANSI_YELLOW);
+		System.out.print("White: ");
+		System.out.println("[" + white.size() + "]");
+		System.out.print(ANSI_RESET);
+		System.out.print("Black: ");
+		System.out.println("[" + black.size() + "]");
+		System.out.println();
 	}
 }
