@@ -61,21 +61,33 @@ public class UserInterface {
 	}
 	
 	/*Método estático responsável por imprimir a partida, imprimi-se o tabuleiro, as peças
-	 * capturadas, o turno e o proximo jogador.
+	 * capturadas, o turno e o proximo jogador. Verifica o tamanho da lista de peças brancas e 
+	 * pretas e se forem diferentes de 12, o jogo ainda não acabou. Se retornar falso, quer dizer 
+	 * que não há ou peças brancas ou peças pretas dispostas no tabuleiro, e o jogo acaba.
 	 */
-	public static void printMatch(CheckersMatch checkersMatch, List<CheckersPiece> captured) {
+	public static void printMatch(CheckersMatch checkersMatch, List<CheckersPiece> captured, List<CheckersPiece> white, List<CheckersPiece> black) {
 		printBoard(checkersMatch.getPieces());
 		System.out.println();
 		printCapturedPieces(captured);
 		System.out.println("Turn: " + checkersMatch.getTurn());
 		
-		if(checkersMatch.getCurrentPlayer() == Color.WHITE) {
-			System.out.println("Waiting player: " + ANSI_YELLOW + "WHITE" + ANSI_RESET);
+		if((white.size() != 12 && black.size() != 12)) {
+			
+			if(checkersMatch.getCurrentPlayer() == Color.WHITE) {
+				System.out.println("Waiting player: " + ANSI_YELLOW + "WHITE" + ANSI_RESET);
+			}
+			else {
+				System.out.println("Waiting player: BLACK");
+			}
 		}
 		else {
-			System.out.println("Waiting player: BLACK");
+			if(white.size() == 12) {
+				System.out.println("WINNER: BLACK");
+			}
+			else {
+				System.out.println("WINNER: "+ ANSI_YELLOW + "WHITE" + ANSI_RESET);
+			}
 		}
-		
 	}
 	
 	/*Método estático responsável por imprimir o tabuleiro, para isso ele recebe a matriz de 

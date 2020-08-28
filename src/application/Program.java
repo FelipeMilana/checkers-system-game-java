@@ -38,7 +38,7 @@ public class Program {
 			try {
 				System.out.println();
 				UserInterface.clearScreen();
-				UserInterface.printMatch(checkersMatch, captured);
+				UserInterface.printMatch(checkersMatch, captured, white, black);
 				System.out.println();
 				System.out.print("Source: ");
 				CheckersPosition source = UserInterface.readCheckersPosition(sc);
@@ -105,6 +105,11 @@ public class Program {
 				System.out.print(e.getMessage());
 				sc.nextLine();
 			}
-		} 
+		}
+		
+		/*Para limpar a tela e mostrar a partida final e o ganhador.
+		 */
+		UserInterface.clearScreen();
+		UserInterface.printMatch(checkersMatch, captured, white, black);
 	}
 }
