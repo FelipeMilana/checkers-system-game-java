@@ -12,8 +12,10 @@ import checkers.Color;
 
 public class UserInterface {
 
-	//codigo de cores
-	public static final String ANSI_RESET = "\u001B[0m";  // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
+	/*Codigos das cores utilizadas no jogo. Os codigos foram pego no site:
+	 * // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
+	 */
+	public static final String ANSI_RESET = "\u001B[0m";  
 	public static final String ANSI_BLACK = "\u001B[30m";
 	public static final String ANSI_RED = "\u001B[31m";
 	public static final String ANSI_GREEN = "\u001B[32m";
@@ -32,26 +34,35 @@ public class UserInterface {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 	
-	//limpa a tela do terminal
-	public static void clearScreen() {      // https://stackoverflow.com/questions/2979383/java-clear-the-console
+	/*Método reponsável por limpar a tela do terminal, e o codigo foi
+	 * pego no site: https://stackoverflow.com/questions/2979383/java-clear-the-console
+	 */
+	public static void clearScreen() {      
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}	
 	
-	//ler os dados do usuario
+	/*Método estatico, pois não precisa de objeto, e responsável por ler
+	 * os dados inseridos pelo usuario, como a posição de origem e de destino.
+	 * Como a leitura é feita com um string, seprarou o string por meio do uso 
+	 * do substring e transformou para inteiro. Se o método tiver alguma exceção
+	 * essa exceção é tratada neste próprio método.
+	 */
 	public static CheckersPosition readCheckersPosition(Scanner sc) {
 		try {
-			String s = sc.nextLine();  //ex: a2
-			char column = s.charAt(0); //recebe a primeira letra da string, ex: a
-			int row = Integer.parseInt(s.substring(1));  //transforma de string para int
-			return new CheckersPosition(column, row);   //instanscia uma posição de damas
+			String s = sc.nextLine();  
+			char column = s.charAt(0); 
+			int row = Integer.parseInt(s.substring(1));  
+			return new CheckersPosition(column, row);   
 		}
 		catch(RuntimeException e) {
 			throw new InputMismatchException("Error reading Checkersposition. Valid values are from a1 to h8.");
 		}
 	}
 	
-	//impressao da partida
+	/*Método estático responsável por imprimir a partida, imprimi-se o tabuleiro, as peças
+	 * capturadas, o turno e o proximo jogador.
+	 */
 	public static void printMatch(CheckersMatch checkersMatch, List<CheckersPiece> captured) {
 		printBoard(checkersMatch.getPieces());
 		System.out.println();
@@ -67,13 +78,15 @@ public class UserInterface {
 		
 	}
 	
-	//impressao do tabuleiro
+	/*Método estático responsável por imprimir o tabuleiro, para isso ele recebe a matriz de 
+	 * peças, imprimir os numeros das casas, letras de cada casa, cor de cada casa.
+	 */
 	public static void printBoard(CheckersPiece[][] checkersPiece) {   
 		for(int i = 0; i < checkersPiece.length; i++) {
 			System.out.print(ANSI_WHITE + (8 - i) + " " + ANSI_RESET);
 			for(int j = 0; j < checkersPiece[i].length; j++) {
 				
-				if((i % 2 == 0 || i == 0) && (j == 0 || j % 2 == 0)) {   //montar o tabuleiro com as casas verdes e brancas
+				if((i % 2 == 0 || i == 0) && (j == 0 || j % 2 == 0)) {  
 					System.out.print(ANSI_WHITE_BACKGROUND);
 				}
 				else if(i % 2 != 0 && j % 2 != 0) {
@@ -90,30 +103,37 @@ public class UserInterface {
 		System.out.println(ANSI_WHITE + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
 	}
 	
-	//impressao do tabuleiro com os movimentos possiveis
-		public static void printBoard(CheckersPiece[][] checkersPiece, boolean[][] possibleMoves) {    //sobrecarga do metodo
-			for(int i = 0; i < checkersPiece.length; i++) {
-				System.out.print(ANSI_RED + (8 - i) + " " + ANSI_RESET);
-				for(int j = 0; j < checkersPiece[i].length; j++) {
-					
-					if((i % 2 == 0 || i == 0) && (j == 0 || j % 2 == 0)) {   //montar o tabuleiro com as casas verdes e brancas
-						System.out.print(ANSI_WHITE_BACKGROUND);
-					}
-					else if(i % 2 != 0 && j % 2 != 0) {
-						System.out.print(ANSI_WHITE_BACKGROUND);
-					}
-					else {
-						System.out.print(ANSI_GREEN_BACKGROUND);
-					}
-					
-					printPiece(checkersPiece[i][j], possibleMoves[i][j]);    //se na posição do possibleMoves tiver true, ele pinta o movimento
+	/*Método estático, sobrecarga do anterior, responsável por imprimir o tabuleiro, para isso 
+	 * ele recebe a matriz de peças e a matriz booleana de movimentos possiveis da peça da posição
+	 * de origem. Assim,imprimirá o tabuleiro, e com a ajuda do método printPiece, ele imprime as 
+	 * peças no tabuleiro, bem como imprimirá em azul os movimentos possiveis da peça da posiçao 
+	 * selecionada.
+	 */
+	public static void printBoard(CheckersPiece[][] checkersPiece, boolean[][] possibleMoves) {    
+		for(int i = 0; i < checkersPiece.length; i++) {
+			System.out.print(ANSI_RED + (8 - i) + " " + ANSI_RESET);
+			for(int j = 0; j < checkersPiece[i].length; j++) {
+				
+				if((i % 2 == 0 || i == 0) && (j == 0 || j % 2 == 0)) {   
+					System.out.print(ANSI_WHITE_BACKGROUND);
 				}
-				System.out.println();
+				else if(i % 2 != 0 && j % 2 != 0) {
+					System.out.print(ANSI_WHITE_BACKGROUND);
+				}
+				else {
+					System.out.print(ANSI_GREEN_BACKGROUND);
+				}
+				
+				printPiece(checkersPiece[i][j], possibleMoves[i][j]);   
 			}
-			System.out.println(ANSI_RED + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
+			System.out.println();
 		}
+		System.out.println(ANSI_RED + "   a  b  c  d  e  f  g  h" + ANSI_RESET);
+	}
 	
-	//impressao de uma peça
+	/*Método estático responsável por imprimir as peças do tabuleiro e imprimir em 
+	 * azul os movimentos possiveis de cada peça.
+	 */
 	private static void printPiece(CheckersPiece checkersPiece, boolean background) {
 		if(background) {
 			System.out.print(ANSI_BLUE_BACKGROUND);
@@ -123,14 +143,17 @@ public class UserInterface {
 			System.out.print("   "+ ANSI_RESET );
 		}
 		else if(checkersPiece.getColor() == Color.WHITE) {
-			System.out.print(ANSI_YELLOW + " "+checkersPiece.toString() +" " + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
+			System.out.print(ANSI_YELLOW + " "+checkersPiece.toString() +" " + ANSI_RESET);  
 		}
 		else {
-			System.out.print(ANSI_BLACK + " "+checkersPiece.toString() +" " + ANSI_RESET);  //imprimo o que tiver no toString da peça branca
+			System.out.print(ANSI_BLACK + " "+checkersPiece.toString() +" " + ANSI_RESET);  
 		}
 	}
 	
-	//imprime a lista de peças capturadas
+	/*Método estático responsável por receber a lista de peças capturadas, criar uma lista
+	 * contendo as peças da cor branca, e outra lista contendo as peças da cor preta. Em 
+	 * seguida é impresso a quantidade de peças em cada lista. 
+	 */
 	private static void printCapturedPieces(List<CheckersPiece> captured) {
 		List<CheckersPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
 		List<CheckersPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());

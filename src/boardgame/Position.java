@@ -2,17 +2,18 @@ package boardgame;
 
 public class Position {  //posição no tabuleiro
 
-	//attributes
+	/*Instanciação dos atributos e construtores.
+	 */
 	private int row;
 	private int column;
-	
-	//constructors
+
 	public Position(int row, int column) {
 		this.row = row;
 		this.column = column;
 	}
 
-	//methods
+	/*Métodos getters e setters dos atributos.
+	 */
 	public int getRow() {
 		return row;
 	}
@@ -29,12 +30,18 @@ public class Position {  //posição no tabuleiro
 		this.column = column;
 	}
 	
+	/*Método responsável por atualizar os valores de linha e
+	 * coluna de uma determinada posição.
+	 */
 	public void setValues(int row, int column) {
 		this.row = row;
 		this.column = column;
 	}
 	
-	@Override  //sobreposição do metodo
+	/*Método responsável por imprimir a posição e é uma sobreposição
+	 *do método toString da classe Object.
+	 */
+	@Override  
 	public String toString() {
 		return row + "," + column;
 	}
