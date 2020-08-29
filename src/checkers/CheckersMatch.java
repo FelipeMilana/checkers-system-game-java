@@ -153,7 +153,8 @@ public class CheckersMatch {
 	/*Método responsável pelo movimento de trocas de peça no tabuleiro. Primeiro
 	 *retira-se a peça na posição de origem e na posição de destino. Se a posição 
 	 *de destino, 2 casas a mais, quer dizer que a posição de destino é para capturar
-	 *uma peça. Assim, se a peça capturada for nula, quer dizer que apenas andou, senao 
+	 *uma peça. Em seguida, verifica-se qual a instancia da peça, se é uma dama ou 
+	 *uma pedra normal. Assim, se a peça capturada for nula, quer dizer que apenas andou, senao 
 	 *quer dizer que capturou. Se capturou, a peça é retirada da lista de peças dispostas
 	 *no tabuleiro, e adicionada na lista de peças capturadas. Por fim, eu coloco a peça
 	 *retirada da posição de origem na posição de destino.
@@ -165,23 +166,66 @@ public class CheckersMatch {
 		
 		if((target.getRow() <= source.getRow() - 2) || (target.getRow() >= source.getRow() + 2)) {  
 			
-			if(target.getRow() > source.getRow() && target.getColumn() > source.getColumn()) {   
-				Position capture = new Position(source.getRow() + 1, source.getColumn() + 1);
-				capturedPiece = board.removePiece(capture);
+			if(p instanceof Rock) {
+				if(target.getRow() > source.getRow() && target.getColumn() > source.getColumn()) {   
+					Position capture = new Position(source.getRow() + 1, source.getColumn() + 1);
+					capturedPiece = board.removePiece(capture);
+				}
+				else if(target.getRow() > source.getRow() && target.getColumn() < source.getColumn()) {  
+					Position capture = new Position(source.getRow() + 1, source.getColumn() - 1);
+					capturedPiece = board.removePiece(capture);
+				}
+				else if(target.getRow() < source.getRow() && target.getColumn() > source.getColumn()) {   
+					Position capture = new Position(source.getRow() - 1, source.getColumn() + 1);
+					capturedPiece = board.removePiece(capture);
+				}
+				else {  
+					Position capture = new Position(source.getRow() - 1, source.getColumn() - 1);
+					capturedPiece = board.removePiece(capture);
+				}
 			}
-			else if(target.getRow() > source.getRow() && target.getColumn() < source.getColumn()) {  
-				Position capture = new Position(source.getRow() + 1, source.getColumn() - 1);
-				capturedPiece = board.removePiece(capture);
-			}
-			else if(target.getRow() < source.getRow() && target.getColumn() > source.getColumn()) {   
-				Position capture = new Position(source.getRow() - 1, source.getColumn() + 1);
-				capturedPiece = board.removePiece(capture);
-			}
-			else {  
-				Position capture = new Position(source.getRow() - 1, source.getColumn() - 1);
-				capturedPiece = board.removePiece(capture);
+			else {
+					
+				if(target.getRow() > source.getRow() && target.getColumn() > source.getColumn()) {   
+					Position capture = new Position(0, 0);
+					capture.setValues(source.getRow() + 1, source.getColumn() + 1);
+					
+					while(board.positionExists(capture) && !board.thereIsAPiece(capture)) {
+						capture.setValues(capture.getRow() + 1, capture.getColumn() + 1);
+					}
+					capturedPiece = board.removePiece(capture);
+				}
+				else if(target.getRow() > source.getRow() && target.getColumn() < source.getColumn()) {
+					Position capture = new Position(0, 0);
+					capture.setValues(source.getRow() + 1, source.getColumn() - 1);
+					
+					while(board.positionExists(capture) && !board.thereIsAPiece(capture)) {
+						capture.setValues(capture.getRow() + 1, capture.getColumn() - 1);
+					}
+					capturedPiece = board.removePiece(capture);
+				}
+				else if(target.getRow() < source.getRow() && target.getColumn() > source.getColumn()) {
+					Position capture = new Position(0, 0);
+					capture.setValues(source.getRow() - 1, source.getColumn() + 1);
+					
+					while(board.positionExists(capture) && !board.thereIsAPiece(capture)) {
+						capture.setValues(capture.getRow() - 1, capture.getColumn() + 1);
+					}
+					capturedPiece = board.removePiece(capture);
+				}
+				else {
+					Position capture = new Position(0, 0);
+					capture.setValues(source.getRow() - 1, source.getColumn() - 1);
+					
+					while(board.positionExists(capture) && !board.thereIsAPiece(capture)) {
+						capture.setValues(capture.getRow() - 1, capture.getColumn() - 1);
+					}
+					capturedPiece = board.removePiece(capture);
+				}
 			}
 		}
+		
+		
 		
 		if(capturedPiece != null) {
 			piecesOnTheBoard.remove(capturedPiece);

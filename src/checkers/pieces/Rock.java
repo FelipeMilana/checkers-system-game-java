@@ -27,12 +27,11 @@ public class Rock extends CheckersPiece{
 	/*Método sobreposto do método abstrato da classe Piece. Neste método
 	 * iremos criar uma matriz com as mesmas dimensões da matriz de peças 
 	 * disponíveis no tabuleiro. Utilizaremos uma posição p auxiliar, em 
-	 * seguida verificamos a cor da peça, e depois os possíveis movimentos
-	 * de captura para as direções nordeste, noroeste, sudeste e sudoeste.
-	 * Além disso para que seja possível um movimento de captura, na direção
-	 * da peça tem que ter uma peça inimiga, e essa posição tem que existir.
-	 * Se verificado, verifica a casa na frente da peça inimiga, se ela estiver 
-	 * vazia e existir, é que é possível capturar.
+	 * seguida verificamos os possíveis movimentos de captura para as direções 
+	 * nordeste, noroeste, sudeste e sudoeste.Além disso para que seja possível 
+	 * um movimento de captura, na direção da peça tem que ter uma peça inimiga, 
+	 * e essa posição tem que existir.Se verificado, verifica a casa na frente da 
+	 * peça inimiga, se ela estiver vazia e existir, é que é possível capturar.
 	 */
 	@Override
 	public boolean[][] possibleCatchMoves() {
@@ -40,98 +39,49 @@ public class Rock extends CheckersPiece{
 		
 		Position p = new Position(0, 0); 
 		
-		if(getColor() == Color.WHITE) {
-			
-			//nordeste
-			p.setValues(position.getRow() - 1, position.getColumn() + 1);  
-			
-			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
-				p.setValues(p.getRow() - 1, p.getColumn() + 1);        
-				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-				}
-			}
+		//nordeste
+		p.setValues(position.getRow() - 1, position.getColumn() + 1);  
 		
-			//noroeste
-			p.setValues(position.getRow() - 1, position.getColumn() - 1);  
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
+			p.setValues(p.getRow() - 1, p.getColumn() + 1);        
 			
-			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
-				p.setValues(p.getRow() - 1, p.getColumn() - 1);        
-				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-				}
-			}
-			
-			//sudoeste 
-			p.setValues(position.getRow() + 1, position.getColumn() - 1);
-			
-			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
-				p.setValues(p.getRow() + 1, p.getColumn() - 1);        
-				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-				}
-			}
-			
-			//sudeste 
-			p.setValues(position.getRow() + 1, position.getColumn() + 1);
-			
-			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
-				p.setValues(p.getRow() + 1, p.getColumn() + 1);        
-				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-				}
+			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
+				mat[p.getRow()][p.getColumn()] = true;
 			}
 		}
-		else {
+	
+		//noroeste
+		p.setValues(position.getRow() - 1, position.getColumn() - 1);  
+		
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
+			p.setValues(p.getRow() - 1, p.getColumn() - 1);        
 			
-			//sudeste
-			p.setValues(position.getRow() + 1, position.getColumn() + 1);  
-			
-			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {    
-				p.setValues(p.getRow() + 1, p.getColumn() + 1);        
-				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {  
-					mat[p.getRow()][p.getColumn()] = true;
-				}
+			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
+				mat[p.getRow()][p.getColumn()] = true;
 			}
+		}
+		
+		//sudoeste 
+		p.setValues(position.getRow() + 1, position.getColumn() - 1);
+		
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
+			p.setValues(p.getRow() + 1, p.getColumn() - 1);        
 			
-			//sudoeste
-			p.setValues(position.getRow() + 1, position.getColumn() - 1);  
-			
-			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {       
-				p.setValues(p.getRow() + 1, p.getColumn() - 1);        
-				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-				}
+			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
+				mat[p.getRow()][p.getColumn()] = true;
 			}
+		}
+		
+		//sudeste 
+		p.setValues(position.getRow() + 1, position.getColumn() + 1);
+		
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
+			p.setValues(p.getRow() + 1, p.getColumn() + 1);        
 			
-			//nordeste 
-			p.setValues(position.getRow() - 1, position.getColumn() + 1);  
-			
-			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
-				p.setValues(p.getRow() - 1, p.getColumn() + 1);        
-				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-				}
+			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
+				mat[p.getRow()][p.getColumn()] = true;
 			}
-			
-			//noroeste
-			p.setValues(position.getRow() - 1, position.getColumn() - 1);  
-			
-			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {      
-				p.setValues(p.getRow() - 1, p.getColumn() - 1);        
-				
-				if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-				}
-			}
-		}	
+		}
 		return mat;
 	}
 	
@@ -150,7 +100,7 @@ public class Rock extends CheckersPiece{
 		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];  
 		
 		
-		Position p = new Position(0, 0); //posição auxiliar
+		Position p = new Position(0, 0); 
 		
 		if(getColor() == Color.WHITE) {
 			//nordeste
