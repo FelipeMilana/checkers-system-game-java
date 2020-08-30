@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
+import checkers.pieces.KingRock;
 import checkers.pieces.Rock;
 
 public class CheckersMatch {
@@ -19,6 +20,7 @@ public class CheckersMatch {
 	private int turn;
 	
 	private Board board;
+	private CheckersPiece promoted;
 	private Color currentPlayer;
 	private List<Piece> piecesOnTheBoard = new ArrayList<Piece>();
 	private List<Piece> capturedPieces = new ArrayList<Piece>();
@@ -114,6 +116,34 @@ public class CheckersMatch {
 		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
 	}
 	
+	/*Método responável por promover a pedra à dama, se essa peça chegar
+	 * no final ou no começo do tabuleiro, dependendo da cor. Para isso 
+	 * recebe-se a posição de destino da peça que foi movimentada, e verifica
+	 * o lugar em q ela parou. Se foi um desses lugares mencionados, retira-se
+	 * a peça do tabuleiro, e coloca uma KingRock no lugar.
+	 */
+	public CheckersPiece piecePromoted(CheckersPosition checkersPosition) {
+		promoted = null;
+		Position p = checkersPosition.toPosition();
+		CheckersPiece movedPiece = (CheckersPiece)board.piece(p);
+		
+		if(movedPiece instanceof Rock) {
+			if((movedPiece.getColor() == Color.WHITE && p.getRow() == 0) || (movedPiece.getColor() == Color.BLACK && p.getRow() == 7)) {
+				promoted = movedPiece;
+				Position pos = promoted.getCheckersPosition().toPosition();
+				Piece piece = board.removePiece(pos);
+				piecesOnTheBoard.remove(piece);
+				
+				CheckersPiece newPiece = new KingRock(board, promoted.getColor());
+				board.placePiece(newPiece, pos);
+				piecesOnTheBoard.add(newPiece);
+				
+				promoted = newPiece;
+			}
+		}
+		return promoted;
+	}
+	
 	/*Método auxiliar(privado) responsavel por validar uma posição de 
 	 *origem.Se algumas dessa verificações forem verdadeiras, é lançada uma
 	 *exceção, e NÂO é tratada nesta classe. Primeiro, verifica-se se há uma 
@@ -122,7 +152,6 @@ public class CheckersMatch {
 	 *possivel, e por último, verifica se no tabuleiro existe alguma peça que pode
 	 *fazer o moviment de comer, e se aquela peça em questão pode comer.
 	 */
-	
 	private void validateSourcePosition(Position position) {
 		if(!board.thereIsAPiece(position)) {   
 			throw new CheckersException("There is no piece on source position!");   

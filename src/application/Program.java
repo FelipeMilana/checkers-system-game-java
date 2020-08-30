@@ -89,6 +89,7 @@ public class Program {
 						target = newTarget;
 					}
 				}
+				CheckersPiece promoted = checkersMatch.piecePromoted(target);
 				checkersMatch.nextTurn();
 			}
 			

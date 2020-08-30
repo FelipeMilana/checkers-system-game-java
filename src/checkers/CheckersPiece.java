@@ -27,6 +27,12 @@ public abstract class CheckersPiece extends Piece {   //tambem é abstrata
 		return color;
 	}
 	
+	/*Método responsável por retornar a posição de uma peça de damas.
+	 */
+	public CheckersPosition getCheckersPosition() {
+		return CheckersPosition.fromPosition(position);
+	}
+	
 	/*Método que recebe como parâmetro uma posição e retorna se a peça
 	 * naquela posição é uma peça adversária, ou seja, não é nula e possui
 	 * cor diferente.
