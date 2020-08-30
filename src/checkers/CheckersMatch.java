@@ -185,42 +185,57 @@ public class CheckersMatch {
 				}
 			}
 			else {
-					
+					//sudeste
 				if(target.getRow() > source.getRow() && target.getColumn() > source.getColumn()) {   
 					Position capture = new Position(0, 0);
 					capture.setValues(source.getRow() + 1, source.getColumn() + 1);
 					
-					while(board.positionExists(capture) && !board.thereIsAPiece(capture)) {
+					while(board.positionExists(capture) && !board.thereIsAPiece(capture) && capture.getRow() < target.getRow()) {
 						capture.setValues(capture.getRow() + 1, capture.getColumn() + 1);
 					}
-					capturedPiece = board.removePiece(capture);
+					
+					if(board.positionExists(capture) && board.thereIsAPiece(capture)) {
+						capturedPiece = board.removePiece(capture);
+					}
 				}
+				//sudoeste
 				else if(target.getRow() > source.getRow() && target.getColumn() < source.getColumn()) {
 					Position capture = new Position(0, 0);
 					capture.setValues(source.getRow() + 1, source.getColumn() - 1);
 					
-					while(board.positionExists(capture) && !board.thereIsAPiece(capture)) {
+					while(board.positionExists(capture) && !board.thereIsAPiece(capture) && capture.getRow() < target.getRow()) {
 						capture.setValues(capture.getRow() + 1, capture.getColumn() - 1);
 					}
-					capturedPiece = board.removePiece(capture);
+					
+					if(board.positionExists(capture) && board.thereIsAPiece(capture)) {
+						capturedPiece = board.removePiece(capture);
+					}
 				}
+				//nordeste
 				else if(target.getRow() < source.getRow() && target.getColumn() > source.getColumn()) {
 					Position capture = new Position(0, 0);
 					capture.setValues(source.getRow() - 1, source.getColumn() + 1);
 					
-					while(board.positionExists(capture) && !board.thereIsAPiece(capture)) {
+					while(board.positionExists(capture) && !board.thereIsAPiece(capture) && capture.getRow() > target.getRow()) {
 						capture.setValues(capture.getRow() - 1, capture.getColumn() + 1);
 					}
-					capturedPiece = board.removePiece(capture);
+					
+					if(board.positionExists(capture) && board.thereIsAPiece(capture)) {
+						capturedPiece = board.removePiece(capture);
+					}
 				}
+				//nororeste
 				else {
 					Position capture = new Position(0, 0);
 					capture.setValues(source.getRow() - 1, source.getColumn() - 1);
 					
-					while(board.positionExists(capture) && !board.thereIsAPiece(capture)) {
+					while(board.positionExists(capture) && !board.thereIsAPiece(capture) && capture.getRow() > target.getRow()) {
 						capture.setValues(capture.getRow() - 1, capture.getColumn() - 1);
 					}
-					capturedPiece = board.removePiece(capture);
+					
+					if(board.positionExists(capture) && board.thereIsAPiece(capture)) {
+						capturedPiece = board.removePiece(capture);
+					}
 				}
 			}
 		}

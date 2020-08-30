@@ -124,21 +124,10 @@ public class KingRock extends CheckersPiece {
 			p.setValues(p.getRow() - 1, p.getColumn() + 1);
 		}
 		
-		if(getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) { 
-			if(isThereOpponentPiece(p)) {
-				p.setValues(p.getRow() - 1, p.getColumn() + 1);
-				
-				if(getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) {
-					Position p1 = new Position(0, 0);
-					p1.setValues(position.getRow() - 1, position.getColumn() + 1);
-					
-					while(getBoard().positionExists(p1) && !getBoard().thereIsAPiece(p1)) {  
-						mat[p1.getRow()][p1.getColumn()] = true;
-						p1.setValues(p1.getRow() - 1, p1.getColumn() + 1);
-					}
-				}
-			}
-			else {
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) { 
+			p.setValues(p.getRow() - 1, p.getColumn() + 1);
+			
+			if(  (getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) || (!getBoard().positionExists(p)) ) {
 				Position p1 = new Position(0, 0);
 				p1.setValues(position.getRow() - 1, position.getColumn() + 1);
 				
@@ -148,28 +137,27 @@ public class KingRock extends CheckersPiece {
 				}
 			}
 		}
+		else {
+			Position p1 = new Position(0, 0);
+			p1.setValues(position.getRow() - 1, position.getColumn() + 1);
+				
+			while(getBoard().positionExists(p1) && !getBoard().thereIsAPiece(p1)) {  
+				mat[p1.getRow()][p1.getColumn()] = true;
+				p1.setValues(p1.getRow() - 1, p1.getColumn() + 1);
+			}
+			
+		}
 		
 		//noroeste
 		p.setValues(position.getRow() - 1 , position.getColumn() - 1); 
 		while(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {   
-			p.setValues(p.getRow() + 1, p.getColumn() + 1);
+			p.setValues(p.getRow() - 1, p.getColumn() - 1);
 		}
 		
-		if(getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) { 
-			if(isThereOpponentPiece(p)) {
-				p.setValues(p.getRow() - 1, p.getColumn() - 1);
-				
-				if(getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) {
-					Position p1 = new Position(0, 0);
-					p1.setValues(position.getRow() - 1, position.getColumn() - 1);
-					
-					while(getBoard().positionExists(p1) && !getBoard().thereIsAPiece(p1)) {  
-						mat[p1.getRow()][p1.getColumn()] = true;
-						p1.setValues(p1.getRow() - 1, p1.getColumn() - 1);
-					}
-				}
-			}
-			else {
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) { 
+			p.setValues(p.getRow() - 1, p.getColumn() - 1);
+			
+			if(  (getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) || (!getBoard().positionExists(p)) ) {
 				Position p1 = new Position(0, 0);
 				p1.setValues(position.getRow() - 1, position.getColumn() - 1);
 				
@@ -179,6 +167,16 @@ public class KingRock extends CheckersPiece {
 				}
 			}
 		}
+		else {
+			Position p1 = new Position(0, 0);
+			p1.setValues(position.getRow() - 1, position.getColumn() - 1);
+				
+			while(getBoard().positionExists(p1) && !getBoard().thereIsAPiece(p1)) {  
+				mat[p1.getRow()][p1.getColumn()] = true;
+				p1.setValues(p1.getRow() - 1, p1.getColumn() - 1);
+			}
+			
+		}
 		
 		//sudeste
 		p.setValues(position.getRow() + 1 , position.getColumn() + 1); 
@@ -186,21 +184,10 @@ public class KingRock extends CheckersPiece {
 			p.setValues(p.getRow() + 1, p.getColumn() + 1);
 		}
 		
-		if(getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) { 
-			if(isThereOpponentPiece(p)) {
-				p.setValues(p.getRow() + 1, p.getColumn() + 1);
-				
-				if(getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) {
-					Position p1 = new Position(0, 0);
-					p1.setValues(position.getRow() + 1, position.getColumn() + 1);
-					
-					while(getBoard().positionExists(p1) && !getBoard().thereIsAPiece(p1)) {  
-						mat[p1.getRow()][p1.getColumn()] = true;
-						p1.setValues(p1.getRow() + 1, p1.getColumn() + 1);
-					}
-				}
-			}
-			else {
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) { 
+			p.setValues(p.getRow() + 1, p.getColumn() + 1);
+			
+			if(  (getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) || (!getBoard().positionExists(p)) ) {
 				Position p1 = new Position(0, 0);
 				p1.setValues(position.getRow() + 1, position.getColumn() + 1);
 				
@@ -210,6 +197,16 @@ public class KingRock extends CheckersPiece {
 				}
 			}
 		}
+		else {
+			Position p1 = new Position(0, 0);
+			p1.setValues(position.getRow() + 1, position.getColumn() + 1);
+				
+			while(getBoard().positionExists(p1) && !getBoard().thereIsAPiece(p1)) {  
+				mat[p1.getRow()][p1.getColumn()] = true;
+				p1.setValues(p1.getRow() + 1, p1.getColumn() + 1);
+			}
+			
+		}
 		
 		//sudoeste
 		p.setValues(position.getRow() + 1 , position.getColumn() - 1); 
@@ -217,21 +214,10 @@ public class KingRock extends CheckersPiece {
 			p.setValues(p.getRow() + 1, p.getColumn() - 1);
 		}
 		
-		if(getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) { 
-			if(isThereOpponentPiece(p)) {
-				p.setValues(p.getRow() + 1, p.getColumn() - 1);
-				
-				if(getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) {
-					Position p1 = new Position(0, 0);
-					p1.setValues(position.getRow() + 1, position.getColumn() - 1);
-					
-					while(getBoard().positionExists(p1) && !getBoard().thereIsAPiece(p1)) {  
-						mat[p1.getRow()][p1.getColumn()] = true;
-						p1.setValues(p1.getRow() + 1, p1.getColumn() - 1);
-					}
-				}
-			}
-			else {
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) { 
+			p.setValues(p.getRow() + 1, p.getColumn() - 1);
+			
+			if(  (getBoard().positionExists(p) && getBoard().thereIsAPiece(p)) || (!getBoard().positionExists(p)) ) {
 				Position p1 = new Position(0, 0);
 				p1.setValues(position.getRow() + 1, position.getColumn() - 1);
 				
@@ -240,6 +226,16 @@ public class KingRock extends CheckersPiece {
 					p1.setValues(p1.getRow() + 1, p1.getColumn() - 1);
 				}
 			}
+		}
+		else {
+			Position p1 = new Position(0, 0);
+			p1.setValues(position.getRow() + 1, position.getColumn() - 1);
+				
+			while(getBoard().positionExists(p1) && !getBoard().thereIsAPiece(p1)) {  
+				mat[p1.getRow()][p1.getColumn()] = true;
+				p1.setValues(p1.getRow() + 1, p1.getColumn() - 1);
+			}
+			
 		}
 		return mat;
 	}
