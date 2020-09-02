@@ -34,11 +34,20 @@ public class Program {
 		 *novamente uma peça. Após todos os movimentos serem feitos, ocorre a troca
 		 *de turno.*/
 		
+		System.out.println();
+		System.out.println("-----Player#1-----");
+		System.out.print("Name:");
+		String name1 = sc.nextLine();
+		System.out.println();
+		System.out.println("-----Player#2-----");
+		System.out.print("Name:");
+		String name2 = sc.nextLine();		
+		
 		while((white.size() != 12) && (black.size() != 12)) { 
 			try {
 				System.out.println();
 				UserInterface.clearScreen();
-				UserInterface.printMatch(checkersMatch, captured, white, black);
+				UserInterface.printMatch(checkersMatch, captured, white, black, name1, name2);
 				System.out.println();
 				System.out.print("Source: ");
 				CheckersPosition source = UserInterface.readCheckersPosition(sc);
@@ -111,6 +120,6 @@ public class Program {
 		/*Para limpar a tela e mostrar a partida final e o ganhador.
 		 */
 		UserInterface.clearScreen();
-		UserInterface.printMatch(checkersMatch, captured, white, black);
+		UserInterface.printMatch(checkersMatch, captured, white, black, name1, name2);
 	}
 }

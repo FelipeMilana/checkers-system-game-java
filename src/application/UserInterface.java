@@ -65,7 +65,7 @@ public class UserInterface {
 	 * pretas e se forem diferentes de 12, o jogo ainda não acabou. Se retornar falso, quer dizer 
 	 * que não há ou peças brancas ou peças pretas dispostas no tabuleiro, e o jogo acaba.
 	 */
-	public static void printMatch(CheckersMatch checkersMatch, List<CheckersPiece> captured, List<CheckersPiece> white, List<CheckersPiece> black) {
+	public static void printMatch(CheckersMatch checkersMatch, List<CheckersPiece> captured, List<CheckersPiece> white, List<CheckersPiece> black, String name1, String name2) {
 		printBoard(checkersMatch.getPieces());
 		System.out.println();
 		printCapturedPieces(captured);
@@ -83,10 +83,13 @@ public class UserInterface {
 		else {
 			if(white.size() == 12) {
 				System.out.println("WINNER: BLACK");
+				System.out.println(ANSI_RED + "Congragulations" + name2 + ANSI_RESET);
 			}
 			else {
 				System.out.println("WINNER: "+ ANSI_YELLOW + "WHITE" + ANSI_RESET);
+				System.out.println(ANSI_RED + "Congragulations" + name1 + ANSI_RESET);
 			}
+			
 		}
 	}
 	
